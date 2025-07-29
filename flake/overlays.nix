@@ -8,7 +8,7 @@ let
         # patches in the original package was already applied
       ];
     });
-    kak-lsp = final.unstable.rustPlatform.buildRustPackage {
+    kak-lsp = final.rustPlatform.buildRustPackage {
       name = "kak-lsp";
       src = inputs.kak-lsp;
       cargoLock.lockFile = "${inputs.kak-lsp}/Cargo.lock";
