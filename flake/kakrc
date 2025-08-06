@@ -62,7 +62,7 @@ set global tabstop 2
 set global indentwidth 2
 
 # Language-specific tabstop with override
-hook global WinSetOption filetype=(rust) %{
+hook global WinSetOption filetype=(rust|python) %{
   set window tabstop 4
   set window indentwidth 4
 }
@@ -174,3 +174,7 @@ hook global BufOpenFile .* %{
 map global normal <a-]> ':inc-dec-modify-numbers + %val{count}<ret>'
 map global normal <a-[> ':inc-dec-modify-numbers - %val{count}<ret>'
 
+
+declare-user-mode ui
+map -docstring "UI" global user u ": enter-user-mode ui<ret>"
+map -docstring "Disable format on save" global ui f ":remove-hooks window lsp-formatting <ret>"
