@@ -8,7 +8,7 @@
   gopls,
   nil,
   nixfmt-rfc-style,
-  python311Packages,
+  python313,
   ltex-ls,
   nodePackages,
   tailwindcss-language-server,
@@ -122,7 +122,14 @@ let
             };
             pylsp = {
               command = "pylsp";
-              package = python311Packages.python-lsp-server;
+              package = [
+                (python313.withPackages (
+                  ps: with ps; [
+                    python-lsp-server
+                    python-lsp-black
+                  ]
+                ))
+              ];
               filetypes = [ "python" ];
               offset_encoding = "utf-8";
               roots = [
@@ -587,7 +594,15 @@ let
   #   } // config.raw);
 
   serverPackages = builtins.filter (v: v != null) (
-    lib.mapAttrsToList (_: serv: serv.package or null) config.languageServers
+    lib.flatten (
+      lib.mapAttrsToList (
+        _: serv:
+        let
+          pkg = serv.package or null;
+        in
+        if builtins.isList pkg then pkg else [ pkg ]
+      ) config.languageServers
+    )
   );
 in
 {
