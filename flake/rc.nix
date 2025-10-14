@@ -1,6 +1,7 @@
 {
   lib,
   bash,
+  pkgs,
   writeScript,
   writeTextDir,
   prependRc ? "",
@@ -33,13 +34,14 @@ let
   '';
 in
 writeTextDir "share/kak/kakrc.local" ''
-  ${prependRc}
-  ${builtins.readFile ./kakrc}
-  ${appendRc}
+    ${prependRc}
+    ${builtins.readFile ./kakrc}
+  set global grepcmd "${pkgs.ripgrep}/bin/rg --line-number --no-column --no-heading --follow --color=never "
+    ${appendRc}
 
-  # Source any settings in the current working directory,
-  # recursive upwards
-  evaluate-commands %sh{
-    ${source-pwd}
-  }
+    # Source any settings in the current working directory,
+    # recursive upwards
+    evaluate-commands %sh{
+      ${source-pwd}
+    }
 ''

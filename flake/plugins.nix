@@ -4,6 +4,7 @@
   fetchFromGitHub,
   fetchFromGitLab,
   luajit,
+  pkgs,
   ...
 }:
 with {
@@ -47,11 +48,11 @@ builtins.map kakounePlugin [
           }
       }
 
-      set-option global peneira_files_command "fd -L ."
+      set-option global peneira_files_command "${pkgs.fd}/bin/fd -L ."
 
       # Grep in the current location
       define-command peneira-grep %{
-        peneira 'line: ' %{ rg -L -n . . } %{
+        peneira 'line: ' %{ ${pkgs.ripgrep}/bin/rg -L -n . . } %{
           lua %arg{1} %{
             local file, line = arg[1]:match("([^:]+):(%d+):")
             kak.edit(file, line)
