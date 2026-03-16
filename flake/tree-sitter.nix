@@ -158,7 +158,6 @@ let
       punctuation = "%opt{overlay2}";
       punctuation_special = "%opt{sky}";
       special = "%opt{blue}";
-      spell = "%opt{mauve}";
       string = "%opt{green}";
       string_regex = "%opt{peach}";
       string_regexp = "%opt{peach}";
@@ -184,6 +183,7 @@ let
     aliases = {
       comment_block = "comment";
       comment_line = "comment";
+      comment_documentation = "info";
       constant_character_escape = "constant_character";
       constant_numeric_float = "constant_numeric";
       constant_numeric_integer = "constant_numeric";
